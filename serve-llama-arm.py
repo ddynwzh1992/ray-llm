@@ -30,10 +30,10 @@ class LLamaCPPDeployment:
         self.model_id = os.getenv("MODEL_ID", default="SanctumAI/Llama-3.2-1B-Instruct-GGUF")
         # Get filename from environment variable with default fallback to "*Q4_0.gguf"
         self.filename = os.getenv("MODEL_FILENAME", default="*Q4_0.gguf")
-        # self.n_ctx = int(os.getenv("N_CTX"))
+        self.n_ctx = int(os.getenv("N_CTX"))
         # self.n_batch = int(os.getenv("N_BATCH"))
         # self.llama_cpp = Llama(model_path=MODEL_ID, n_ctx=self.n_ctx, n_batch=self.n_batch)
-        self.llm = Llama.from_pretrained(repo_id=self.model_id,filename=self.filename)
+        self.llm = Llama.from_pretrained(repo_id=self.model_id,filename=self.filename,n_ctx=self.n_ctx)
         #"hugging-quants/Llama-3.2-3B-Instruct-Q8_0-GGUF",
         print("__init__ Complete")
 
