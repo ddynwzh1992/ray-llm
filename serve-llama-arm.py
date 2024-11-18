@@ -21,7 +21,7 @@ logger = logging.getLogger("ray.serve")
 app = FastAPI()
 
 # Define the deployment
-@serve.deployment(name="LLamaCPPDeployment",route_prefix="/v1/chat/completions")
+@serve.deployment(name="LLamaCPPDeployment")
 @serve.ingress(app)
 class LLamaCPPDeployment:
     def __init__(self):
