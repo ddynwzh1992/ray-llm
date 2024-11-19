@@ -51,9 +51,9 @@ class LLamaCPPDeployment:
 
             output = self.llm(
                 "Q: " + prompt + " A: ",
-                max_tokens=body.get("max_tokens", 32),
-                stop=body.get("stop", ["Q:", "\n"]),
-                echo=body.get("echo", True)
+                max_tokens=body.get("max_tokens", 32)
+                # stop=body.get("stop", ["Q:", "\n"]),
+                # echo=body.get("echo", True)
             )        
             
             return JSONResponse(content={
