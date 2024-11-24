@@ -41,7 +41,16 @@ class LLamaCPPDeployment:
     async def call_llama(self, request: Request):
         try:
             body = await request.json()
-            prompt = body.get("messages")
+
+            messages = body.get('messages', [])
+        
+            # Concatenate the content of all messages
+            prompt = ""
+            for message in messages:
+                prompt += message.get('content', '') + "\n"
+            
+            # Trim any trailing newline
+            prompt = prompt.strip()
             
             if not prompt:
                 return JSONResponse(
