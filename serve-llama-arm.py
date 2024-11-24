@@ -41,7 +41,7 @@ class LLamaCPPDeployment:
     async def call_llama(self, request: Request):
         try:
             body = await request.json()
-            prompt = body.get("prompt")
+            prompt = body.get("messages")
             
             if not prompt:
                 return JSONResponse(
