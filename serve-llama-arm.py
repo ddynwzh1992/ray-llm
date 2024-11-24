@@ -42,15 +42,8 @@ class LLamaCPPDeployment:
         try:
             body = await request.json()
 
-            messages = body.get('messages', [])
+            prompt = body.get("prompt", "")
         
-            # Concatenate the content of all messages
-            prompt = ""
-            for message in messages:
-                prompt += message.get('content', '') + "\n"
-            
-            # Trim any trailing newline
-            prompt = prompt.strip()
             
             if not prompt:
                 return JSONResponse(
@@ -63,24 +56,23 @@ class LLamaCPPDeployment:
                 max_tokens=body.get("max_tokens", 32)
             )        
             
-            # return JSONResponse(content={
-            #     "id": "cmpl-" + os.urandom(12).hex(),
-            #     "object": "text_completion",
-            #     "created": int(time.time()),
-            #     "model": self.model_id,
-            #     "choices": [{
-            #         "text": output["choices"][0]["text"],
-            #         "index": 0,
-            #         "finish_reason": "stop"
-            #     }],
-            #     "usage": {
-            #         "prompt_tokens": len(prompt.split()),
-            #         "completion_tokens": len(output["choices"][0]["text"].split()),
-            #         "total_tokens": len(prompt.split()) + len(output["choices"][0]["text"].split())
-            #     }
-            # })
+            return JSONResponse(content={
+                "id": "cmpl-" + os.urandom(12).hex(),
+                "object": "text_completion",
+                "created": int(time.time()),
+                "model": self.model_id,
+                "choices": [{
+                    "text": output["choices"][0]["text"],
+                    "index": 0,
+                    "finish_reason": "stop"
+                }],
+                "usage": {
+                    "prompt_tokens": len(prompt.split()),
+                    "completion_tokens": len(output["choices"][0]["text"].split()),
+                    "total_tokens": len(prompt.split()) + len(output["choices"][0]["text"].split())
+                }
+            })
 
-            return JSONResponse(content={"output": output})
             
         except Exception as e:
             logger.error(f"Error: {str(e)}")
