@@ -27,7 +27,7 @@ app = FastAPI()
 @serve.deployment(name="LLamaCPPDeployment", autoscaling_config={"min_replicas" : 5, "max_replicas": 50}, max_ongoing_requests=100, graceful_shutdown_timeout_s=600)
 @serve.ingress(app)
 class LLamaCPPDeployment:
-    def __init__(self, parallelism: int):
+    def __init__(self, parallelism: str):
         os.environ["OMP_NUM_THREADS"] = parallelism
         # Initialize the LLamaCPP model
         self.model_id = os.getenv("MODEL_ID", default="SanctumAI/Llama-3.2-1B-Instruct-GGUF")
@@ -97,4 +97,4 @@ class LLamaCPPDeployment:
 # Get host CPU count
 host_cpu_count = multiprocessing.cpu_count()
 
-model = LLamaCPPDeployment.bind(host_cpu_count)
+model = LLamaCPPDeployment.bind("host_cpu_count")
