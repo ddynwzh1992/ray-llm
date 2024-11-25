@@ -97,4 +97,4 @@ class LLamaCPPDeployment:
 # Get host CPU count
 host_cpu_count = multiprocessing.cpu_count()
 
-model = LLamaCPPDeployment.bind("host_cpu_count")
+model = LLamaCPPDeployment.bind(host_cpu_count)
