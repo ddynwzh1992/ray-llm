@@ -42,7 +42,16 @@ class LLamaCPPDeployment:
         try:
             body = await request.json()
 
-            prompt = body.get("prompt", "")
+            # Get the messages array from the body
+            messages = body.get("messages", [])
+
+            # Get the content from the last user message
+            prompt = ""
+            if messages:
+                for message in messages:
+                    if message.get("role") == "user":
+                        prompt = message.get("content", "")
+                        break
         
             
             if not prompt:
