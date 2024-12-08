@@ -24,7 +24,7 @@ logger = logging.getLogger("ray.serve")
 app = FastAPI()
 
 # Define the deployment
-@serve.deployment(name="LLamaCPPDeployment", autoscaling_config={"min_replicas" : 5, "max_replicas": 5, "initial_replicas": 5, "upscale_delay_s": 5}, max_ongoing_requests=100, graceful_shutdown_timeout_s=600)
+@serve.deployment(name="LLamaCPPDeployment", autoscaling_config={"min_replicas" : 10, "max_replicas": 10, "initial_replicas": 10, "upscale_delay_s": 5}, max_ongoing_requests=100, graceful_shutdown_timeout_s=600)
 @serve.ingress(app)
 class LLamaCPPDeployment:
     def __init__(self, parallelism: str):
