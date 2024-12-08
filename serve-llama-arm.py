@@ -34,9 +34,10 @@ class LLamaCPPDeployment:
         # Get filename from environment variable with default fallback to "*Q4_0.gguf"
         self.filename = os.getenv("MODEL_FILENAME", default="*Q4_0.gguf")
         self.n_ctx = int(os.getenv("N_CTX"))
+        self.n_threads = int(os.getenv("N_THREADS"))
         # self.n_batch = int(os.getenv("N_BATCH"))
         # self.llama_cpp = Llama(model_path=MODEL_ID, n_ctx=self.n_ctx, n_batch=self.n_batch)
-        self.llm = Llama.from_pretrained(repo_id=self.model_id,filename=self.filename,n_ctx=self.n_ctx)
+        self.llm = Llama.from_pretrained(repo_id=self.model_id,filename=self.filename,n_ctx=self.n_ctx,n_threads=self.n_threads)
         #"hugging-quants/Llama-3.2-3B-Instruct-Q8_0-GGUF",
         print("__init__ Complete")
 
